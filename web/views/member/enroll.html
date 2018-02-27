@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>회원가입</title>
+<script type="text/javascript" src="../js/jquery-3.2.1.min.js"></script>
+<script>
+		$(function(){
+			$("#checkid").click(function(){
+				//jQuery.get() 과 jQuery.ajax() 두 가지 중 선택 사용
+				//$.get() 사용시
+				/* 
+				$.get("idduplicate", {userid : "user01", userpwd : "pass01" }, 
+						function(data){
+							$("#p2").text(data);
+				});
+				 */
+				//$.ajax() 사용시
+				$.ajax({
+					url : "/second/dupid",
+					data : {userid : $("#userid").val()},
+					dataType : "text",
+					type : "post",
+					success : function(value){
+						//alert("서블릿이 보낸 값 : "+ data);
+						if (value == "ok"){ 
+							alert("아이디가 중복되지 않습니다."/* +data.dupCheck */);
+							$('input[name=name]').focus();
+						}
+						else {
+							alert("이미 존재하는 아이디입니다. 아이디를 다시 설정하세요"/* +data.dupCheck */);
+							$('#userid').select();
+						}
+					},
+					error : function(value){
+						alert("잘못 입력하셨습니다."+value);
+					}
+				});
+				return false;
+			}); //click
+		}); //ready
+	</script>
+</head>
+<body>
+<h1 align="center">회원 가입 페이지</h1>
+<center>
+<!-- <form action="../../minsert" method="post"> -->
+<form action="/second/minsert" method="post">
+<table width="600" cellspacing="5" bgcolor="#3399ff">
+<tr><td width="150">아이디</td>
+<td width="450"><input type="text" name="userid" id="userid"> 
+&nbsp; &nbsp; <button type="button" id="checkid">중복확인</button></td></tr>
+<tr><td>이 름</td><td><input type="text" name="name"></td></tr>
+<tr><td>암 호</td><td><input type="password" name="userpwd" id="userpwd"></td></tr>
+<tr><td>암호확인</td><td><input type="password" name="userpwd2" id="userpwd2"></td></tr>
+<tr><td>성 별</td>
+<td><input type="radio" name="gender" value="M"> 남
+<input type="radio" name="gender" value="F"> 여</td></tr>
+<tr><td>나 이</td>
+<td><input type="number" min="20" max="100" name="age" id="age"></td></tr>
+<tr><td>이메일</td><td><input type="email" name="email"></td></tr>
+<tr><td>전화번호</td><td><input type="tel" name="phone"></td></tr>
+<!-- 주소와 우편번호를 입력할 <input>들을 생성하고 적당한 name과 class를 부여한다 -->
+<tr><td>우편번호</td>
+<td><input type="text" name="post" class="postcodify_postcode5" value="" size="6"/>
+<button type="button" id="postcodify_search_button">검색</button></td></tr>
+<tr><td>도로명주소</td><td><input type="text" name="address1" class="postcodify_address" value="" /></td></tr>
+<tr><td>상세주소</td><td><input type="text" name="address2" class="postcodify_details" value="" /></td></tr>
+<tr><td>세부사항</td><td><input type="text" name="" class="postcodify_extra_info" value="" /></td></tr>
+
+<!-- jQuery와 Postcodify를 로딩한다 -->
+<script src="//d1p7wdleee1q2z.cloudfront.net/post/search.min.js"></script>
+
+<!-- "검색" 단추를 누르면 팝업 레이어가 열리도록 설정한다 -->
+<script> $(function() { $("#postcodify_search_button").postcodifyPopUp(); }); </script>
+<tr><td colspan="2" align="center">
+	<input type="submit" value="가입하기"> &nbsp;
+	<input type="reset" value="취소하기">
+</td></tr>
+</table>
+</form>
+<!-- 상대경로로 대상 파일을 지정하는 경우 : 
+<a href="../../index.jsp">시작페이지로 이동</a>
+ -->
+<!-- 절대경로로 대상 파일을 지정하는 방법 :
+	"/context root명/대상파일의 위치경로와 파일명"
+ -->
+<br><br>
+<a href="/second/index.jsp">시작페이지로 이동</a>
+</center>
+
+</body>
+</html>
+
+
+
+

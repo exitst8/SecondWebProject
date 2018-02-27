@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE configuration PUBLIC
+"-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	
+	<settings>
+		<!-- mybatis 설정과 관련된 기본 셋팅을 선언  -->
+		<!-- 만약에 NULL로 데이터가 전달 되었다면 빈칸이 아닌  NULL로 인식하게 설정 하는 것 -->
+		<setting name="jdbcTypeForNull" value="NULL"/>
+	</settings>
+	
+	
+	<typeAliases>
+	<!-- 
+			VO / DTO 객체의 풀 네임을 일반 클래스 명으로 사용하기 위해  등록하는 별칭
+	 -->
+		<typeAlias type="member.model.vo.Member" alias="Member"/>
+		<typeAlias type="notice.model.vo.Notice" alias="Notice"/>
+		<typeAlias type="board.model.vo.Board" alias="Board"/>
+	</typeAliases>
+	
+	<environments default="firstDev">
+	<!-- DataBase 연결할 설정 파일들을 나타냄 -->
+		<environment id="firstDev">
+			<transactionManager type="JDBC"/>
+			<dataSource type="POOLED">
+				<property name="driver" value="oracle.jdbc.driver.OracleDriver"/>
+				<property name="url" value="jdbc:oracle:thin:@127.0.0.1:1521:xe"/>
+				<property name="username" value="student"/>
+				<property name="password" value="student"/>
+			</dataSource>
+		</environment>
+	</environments>
+	
+	<mappers>
+		<!--  DataBase에 사용되는 쿼리문장들을 담은 mapper 파일들을 등록 -->
+		<mapper resource="mybatis/mappers/member-mapper.xml"/>
+		<!-- <mapper resource="mybatis/mappers/notice-mapper.xml"/>
+		<mapper resource="mybatis/mappers/board-mapper.xml"/> -->
+	</mappers>
+	
+</configuration>

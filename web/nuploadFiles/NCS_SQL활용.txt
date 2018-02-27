@@ -1,0 +1,113 @@
+[SQL 활용]
+
+두 개 이상의 테이블을 서로 연결하여 데이터를 검색할 때 사용하는 방법을 조인(JOIN)이라고 한다. 
+
+DML 구문 : INSERT, UPDATE, DELETE
+
+
+한 개의 데이블에 대해 데이터를 삽입, 수정, 삭제하고 행을 조회하는 DML명령문을 작성할 수 있다.
+트랜잭션이란,
+데이터베이스 내에서 한 번에 수행되어야할 일련의 연산들이다.
+둘 이상의 트랜잭션이 서로의 작업에 영향을 주지 않는다.
+트랜잭션 처리 구문으로 ROLLBACK과 COMMIT이 있다.
+
+
+인덱스 : 
+PRIMARY KEY 제약조건에 의해 자동으로 인덱스를 생성한다.
+
+
+SQL쿼리 구문에 조회쿼리가 추가적으로 들어간 구문을 서브쿼리라고 한다. 
+서브쿼리에서 사용되는 연산자는 IN, ANY, ALL, EXISTS
+
+
+다음과 같은 student 테이블이 존재할 때 sid와, subject의 입력으로 학생의 수강과목을 변경할 수 있도록 프로시저를 생성하려고 한다. 
+
+CREATE OR (   REPLACE   ) PROCEDURE update_subject
+  
+ (v_sid (   IN   ) NUMBER,
+  v_subject IN VARCHAR2)
+
+IS
+ 
+(  BEGIN   )
+  
+ UPDATE student
+  
+ SET subject = v_subject
+  
+ WHERE sid = (   v_subject   );
+ 
+ COMMIT;
+
+END;
+
+
+
+뷰는 하나 또는 하나 이상의 테이블로부터 데이터의 부분집합을 논리적으로 표현한 것이다. 
+뷰에는 실제 데이터가 없고 SQL만 저장된다.
+뷰를 통해 데이터의 입력, 수정, 삭제가 가능하다.
+뷰 생성을 하기 위해서는 CREATE VIEW 권한이 있어야한다.
+
+
+오라클의 데이터타입 :
+CHAR타입은 고정 길이 문자열을 저장하고, VARCHAR2는 가변 길이 문자열을 저장한다.
+CHAR타입은 저장할 수 있는 최대 길이만큼 저장공간을 가지며, VARCHAR2는 실제 저장되는 크기만큼의 저장공간을 가진다.
+날짜데이터를 표현하기 위해 DATE타입을 사용한다
+
+
+
+//----------------------------------------------------------------
+memberTb 테이블에 데이터를 삽입하는 명령문
+
+
+테이블명 : memberTb
+
+id                 pass               name               age
+
+(varchar2(10))     (varchar2(20))      (varchar2(10))           (int)
+ 
+0100              1234               이지은               25
+
+0101           C33kimleechoi          강한나                30
+
+0102               snsd              서주현               28
+
+INSERT into memberTb values (‘0100’,‘1234’,‘이지은’,25);
+
+INSERT into memberTb values (‘0101’,‘kimleechol’,‘강한나’,30);
+
+INSERT into memberTb values (‘0102’,‘snsd’,‘서주현’,28);
+
+
+테이블이 생성된 다음에 컬럼 id에 PRIMARY KEY 제약조건을 추가하는 DDL 명령문을 작성
+CREATE TABLE testTbl(
+
+  id int,
+
+  pass varchar(10),
+
+  jno varchar(10),
+
+  addr1 varchar(10),
+
+  addr2 varchar(10)
+);
+
+ALTER TABLE testTbl
+ADD 
+CONSTRAINT testTbl_id_PK PRIMARY KEY(id);
+
+
+오라클 DB의 집합 연산자
+*UNION : 첫번째 쿼리의 모든 행을 두번째 쿼리의 모든 행과 더하고 중복된 행을 제거한 후, 결과를 리턴한다
+
+*UNION ALL : UNION과 같으나 중복되는 행을 제외 시키지 않는다
+
+*INTERSECT : 두 개의 쿼리를 받고 결과를 모은 다음, 두 결과 셋에 모두 존재하는 레코드만을 리턴한다.
+
+*MINUS : 첫번째 쿼리에서만 리턴되며, 두번째 쿼리에서는 리턴되지 않는 레코드만을 리턴한다.
+
+
+*Trigger : 
+특정한 테이블에 INSERT, UPDATE, DELETE와 같은 DML문이 수행되었을 때, 데이터베이스에서 자동으로 동작하도록 작성된 프로그램된 SQL이다.
+즉 사용자가 직접 호출하여 사용하는 것이 아니고 데이터베이스에서 자동적으로 수행하게된다. Trigger는 테이블과 뷰, 데이터베이스 작업을 대상으로 정의할 수 있으며, 전체 트랜잭션 작업에 대해 발생되는 Trigger와 각 행에 대해서 발생되는 Trigger가 있다

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>회원가입</title>
+</head>
+<body>
+<h1 align="center">회원 가입 페이지</h1>
+<center>
+<form action="">
+<table width="600" cellspacing="5" bgcolor="#3399ff">
+<tr><td width="150">아이디</td><td width="450"></td></tr>
+<tr><td>이 름</td><td><input type="text" name="name"></td></tr>
+<tr><td>암 호</td><td><input type="password" name="userpwd" id="userpwd"></td></tr>
+<tr><td>암호확인</td><td><input type="password" name="userpwd2" id="userpwd2"></td></tr>
+<tr><td>성 별</td>
+<td><input type="radio" name="gender" value="M"> 남
+<input type="radio" name="gender" value="F"> 여</td></tr>
+<tr><td>나 이</td>
+<td><input type="number" min="20" max="100" name="age"></td></tr>
+<tr><td>이메일</td><td><input type="email" name="email"></td></tr>
+<tr><td>전화번호</td><td><input type="tel" name="phone"></td></tr>
+<tr><td>우편번호</td><td><input type="text" name="post" size="10"></td></tr>
+<tr><td>기본주소</td><td><input type="text" name="address1"></td></tr>
+<tr><td>상세주소</td><td><input type="text" name="address2"></td></tr>
+<tr><td colspan="2" align="center">
+	<input type="submit" value="가입하기"> &nbsp;
+	<input type="reset" value="취소하기">
+</td></tr>
+</table>
+</form>
+<!-- 상대경로로 대상 파일을 지정하는 경우 : 
+<a href="../../index.jsp">시작페이지로 이동</a>
+ -->
+<!-- 절대경로로 대상 파일을 지정하는 방법 :
+	"/context root명/대상파일의 위치경로와 파일명"
+ -->
+<br><br>
+<a href="/first/index.jsp">시작페이지로 이동</a>
+</center>
+
+</body>
+</html>
+
+
+
+
