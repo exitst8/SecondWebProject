@@ -2,69 +2,51 @@
 <!DOCTYPE mapper PUBLIC
 "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
 <mapper namespace="Member">
-	
-	<!-- <resultMap type="member.model.vo.Member" id="myResultSet"> -->
-	
-	<resultMap type="Member" id="myResultSet">
-		<!-- prop = 자바의 필드변수 이름/ column = DB의 해당 이름 -->
-			
-			<id property="id" column=""/> <!-- DB의 기본 키 -->
-			<result property="passwd" column="PASSWD"/>	<!-- 일반 컬럼 틀 -->
-			<result property="name" column="NAME"/>	
-			<result property="email" column="EMAIL"/>	
-			<result property="gender" column="GENDER"/>	
-			<result property="age" column="AGE"/>	
-			<result property="phone" column="PHONE"/>	
-			<result property="address" column="ADDRESS"/>	
-			<result property="enrollDate" column="ENROLL_DATE"/>	
-	</resultMap>
-	
-<!--	
-	Select, Insert, Update, Delete를 사용하는 쿼리를 사용
-	
-	< Select 구문 >
-	id: 외부에서 참조하기 위한 이름
-	parameterType : 내부로 받을 객체
-	resultType / resultMap : 쿼리 실행 후 나온 결과를 밖으로 꺼내는 객체	
- -->
-	
-	<select id="loginMember" parameterType="Member" resultMap="myResultSet">
-		<!--  ? :  #{values} -->
-		SELECT * FROM MEMBER WHERE ID = #{id} AND PASSWD = #{passwd}
-	</select>
+   <!-- <resultMap type="member.model.vo.Member" id="myResultSet"> -->
+   <resultMap type="Member" id="myResultSet">
+      <!-- property=자바의 필드변수, column=DB의해당칼럼 -->
+      <id property="id" column="ID" /><!-- <id /> : primary key, 중복 체크를 함 -->
+      <result property="passwd" column="PASSWD" /> <!-- <result /> : primary key 아닌것들 -->
+      <result property="name" column="NAME" />
+      <result property="email" column="EMAIL" />
+      <result property="gender" column="GENDER" />
+      <result property="age" column="AGE" />
+      <result property="phone" column="PHONE" />
+      <result property="address" column="ADDRESS" />
+      <result property="enrollDate" column="ENROLL_DATE" />
+   </resultMap>
+   
+   <!-- id: 외부에서 참조하기 위한 이름, parameterType: 내부로 받을 객체, resultMap: 쿼리실행후 나온 결과를 밖으로 꺼내는 객체-->
+   <select id="loginMember" parameterType="Member" resultMap="myResultSet">
+      <!-- #{field}는 pstmt의 ?의 역할이며, 전달된 값을 뜻한다. -->
+      <!-- SELECT * FROM MEMBER WHERE ID =? AND PASSWD =? -->
+      SELECT * FROM MEMBER WHERE ID = #{id} AND PASSWD = #{passwd}
+   </select>
+   
+   <select id="IdDupCheckMember" parameterType="String" resultMap="myResultSet">
+      SELECT * FROM MEMBER WHERE ID = #{id}
+   </select>
+   
+   <!-- insert, update, delete는 설정할 수 있는 속성이  동일하다 -->
+   <insert id="insertMember" parameterType="Member">
+      INSERT INTO MEMBER VALUES(
+         #{id}, #{passwd}, #{name},
+         #{email}, #{gender}, #{age},
+         #{phone}, #{address}, SYSDATE
+      )
+   </insert>
+   
+   <update id="updateMember" parameterType="Member" flushCache="true" statementType="PREPARED" timeout="20">
+      UPDATE MEMBER SET
+      PASSWD=#{passwd}, EMAIL=#{email}, AGE=#{age}, PHONE=#{phone}, ADDRESS=#{address}
+      WHERE ID=#{id}
+   </update>
+   
+   <delete id="deleteMember" parameterType="string" flushCache="true" statementType="PREPARED" timeout="20">
+      DELETE FROM MEMBER
+      WHERE ID = #{id}
+   </delete>
 
-
-<!--	
-	Update, Insert, Delete 는 설정할 수 있는 속성이 동일 하가
--->
-	<insert id="insertMember" parameterType="Member">
-		INSERT INTO  MEMBER VALUES (#{id},#{passwd},#{name},#{email},#{gender},#{age},#{address},SYSDATE)
-	</insert>
-
-
-	<update id="updateMember" parameterType="Member">
-		UPDATE MEMBER SET PAWSSWD = #{passwd}, 
-		EMAIL = #{email}, 
-		AGE = #{age}, 
-		PHONE = #{phne}, 
-		ADDRESS = #{address} 
-		WHERE ID = #{id}
-	</update>
-	
-	<delete id="deleteMember" parameterType="String">
-		DELETE FROM MEMBER WHERE ID = #{userid}
-	</delete>
-	
-	
 </mapper>
-
-
-
-
-
-
-
-
-
-

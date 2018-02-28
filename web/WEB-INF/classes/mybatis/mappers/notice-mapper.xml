@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Notice">
+   <!-- <resultMap type="member.model.vo.Member" id="myResultSet"> -->
+   <resultMap type="Notice" id="NoticeResult">
+      <!-- property=자바의 필드변수, column=DB의해당칼럼 -->
+      <id property="noticeNo" column="NOTICE_NO" /><!-- <id /> : primary key, 중복 체크를 함 -->
+      <result property="noticeTitle" column="NOTICE_TITLE" /> <!-- <result /> : primary key 아닌것들 -->
+      <result property="noticeWriter" column="NOTICE_WRITER" />
+      <result property="noticeDate" column="NOTICE_DATE" />
+      <result property="noticeContent" column="NOTICE_CONTENT" />
+      <result property="filePath" column="FILE_PATH" />
+   </resultMap>
+   
+   
+   <select id="selectList" resultMap="NoticeResult">
+    	select * from notice order by notice_no desc
+   </select>
+
+
+   
+   <select id="selectOne" parameterType="_int" resultMap="NoticeResult">
+   select * from notice where notice_no = #{noticeNo}
+   </select>
+   
+   
+   <select id="selectTitle" parameterType="string" resultMap="NoticeResult">
+   select * from notice where notice_title like '%' || #{keyword} || '%' order by notice_no desc
+   </select>
+   
+   
+   
+   
+   <!-- insert, update, delete는 설정할 수 있는 속성이  동일하다 -->
+   <insert id="insertNotice" parameterType="Notice">
+    insert into notice values (
+				(select max(notice_no) from notice) + 1, 
+				#{noticeTitle},
+				#{noticeWriter},
+				sysdate,
+				#{noticeContent},
+				#{filePath})
+   </insert>
+   
+   
+   
+   <update id="updateNotice" parameterType="Notice">
+     update notice 
+				set notice_title = #{noticeTitle}, 
+				notice_content = #{noticeContent}, 
+				file_path = #{filePath}
+				where notice_no = #{noticeNo}
+   </update>
+   
+   
+   <delete id="deleteNotice" parameterType="_int" >
+     delete from notice where notice_no = #{noticeNo}
+   </delete>
+
+</mapper>

@@ -36,8 +36,8 @@
 	<mappers>
 		<!--  DataBase에 사용되는 쿼리문장들을 담은 mapper 파일들을 등록 -->
 		<mapper resource="mybatis/mappers/member-mapper.xml"/>
-		<!-- <mapper resource="mybatis/mappers/notice-mapper.xml"/>
-		<mapper resource="mybatis/mappers/board-mapper.xml"/> -->
+		<mapper resource="mybatis/mappers/notice-mapper.xml"/>
+		<!-- <mapper resource="mybatis/mappers/board-mapper.xml"/>  -->
 	</mappers>
 	
 </configuration>
